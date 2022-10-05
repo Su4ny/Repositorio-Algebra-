@@ -1,0 +1,94 @@
+#include <iostream>
+
+using namespace std;
+
+void leerMatriz(int** M, int fil, int col);
+void sumaMatrices();
+void multiplicacionMatrices();
+void imprimirMatriz(int** M, int fil, int col);
+void menu();
+
+int main()
+{
+    int opcion;
+
+    do {
+        menu();
+        cin >> opcion;
+        if (cin.fail() || cin.bad()) {
+            opcion = 0;
+            cin.clear();
+            cin.ignore('\n', 80);
+        }
+
+        switch (opcion) {
+        case 1:
+            sumaMatrices();
+            break;
+
+        case 2:
+            multiplicacionMatrices();
+            break;
+
+        case 3:
+            cout << "\n\nFIN DEL PROGRAMA\n\n";
+            break;
+
+        default:
+            cout << "\n\nOPCION NO VALIDA\n\n";
+            break;
+        }
+
+    } while (opcion != 3);
+}
+
+void leerMatriz(int** M, int fil, int col)
+{
+    cout << "\nRellenar la matriz:\n";
+    for (int i = 0; i < fil; i++) {
+        for (int j = 0; j < col; j++) {
+            cout << "Matriz[" << i << "][" << j << "]: ";
+            cin >> M[i][j];
+        }
+    }
+}
+
+void sumaMatrices()
+{
+    int fil, col;
+
+    cout << "\nLAS MATRICES DEBEN TENER LA MISMA DIMENSION\n"
+        << "\nDimensiones de las matrices:";
+    cout << "\nFilas de las matrices: "; cin >> fil;
+    cout << "Columnas de las matrices: "; cin >> col;
+
+    int** A = new int* [fil];
+    for (int i = 0; i < fil; i++)
+        A[i] = new int[col];
+
+    int** B = new int* [fil];
+    for (int i = 0; i < fil; i++)
+        B[i] = new int[col];
+
+    int** C = new int* [fil];
+    for (int i = 0; i < fil; i++)
+        C[i] = new int[col];
+
+    cout << "\nDatos de la matriz A: ";
+    leerMatriz(A, fil, col);
+
+    cout << "\nDatos de la matriz B: ";
+    leerMatriz(B, fil, col);
+
+    for (int i = 0; i < fil; i++)
+        for (int j = 0; j < col; j++)
+            C[i][j] = A[i][j] + B[i][j];
+
+    cout << "\nMatriz A:\n";
+    imprimirMatriz(A, fil, col);
+    cout << "\nMatriz B:\n";
+    imprimirMatriz(B, fil, col);
+    cout << "\nSuma de las matrices (A+B):\n";
+    imprimirMatriz(C, fil, col);
+
+}
